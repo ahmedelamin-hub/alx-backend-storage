@@ -1,0 +1,7 @@
+// This script lists all documents where the name starts with "Holberton" in the collection `school`
+
+// Select the database
+db = db.getSiblingDB('my_db');
+
+// Find documents where the name starts with "Holberton"
+db.school.find({ name: /^Holberton/ }).forEach(printjson);
