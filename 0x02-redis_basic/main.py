@@ -1,19 +1,19 @@
 #!/usr/bin/env python3
-"""
-Main file to test the Cache class
-"""
-from exercise import Cache
+""" Main file """
+
+from exercise import Cache, replay
 
 cache = Cache()
 
-TEST_CASES = {
-    b"foo": None,
-    123: int,
-    "bar": lambda d: d.decode("utf-8")
-}
+# Test storing and retrieving data
+data = b"hello"
+key = cache.store(data)
+print(key)
+print(cache.get(key))  # Should print b'hello'
 
-for value, fn in TEST_CASES.items():
-    key = cache.store(value)
-    result = cache.get(key, fn=fn)
-    print(f"Stored value: {value}, Retrieved value: {result}")
-    assert result == value
+# Test counting method calls
+cache.store(b"first")
+print(cache.get(cache.store.__qualname__))  # Should print b'2' or the correct count
+
+# Test call history
+replay(cache.store)  # Should display the history of calls
